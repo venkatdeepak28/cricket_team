@@ -27,14 +27,25 @@ let iniatilizeDbandServer = async () => {
   }
 }
 
+module.exports = app
+
 iniatilizeDbandServer()
+
+const convertDbObject = objectItem => {
+  return {
+    playerId: objectItem.player_id,
+    playerName: objectItem.player_name,
+    jerseyNumber: objectItem.jersey_number,
+    role: objectItem.role,
+  }
+}
 
 //API1 GET
 
 app.get('/players/', async (request, response) => {
   const getQueryValue = `select * from cricket_team`
   const dbValue = await dbObj.all(getQueryValue)
-  response.send(dbValue)
+  response.send(dbValue.map(eachPlayer => convertDbObject(eachPlayer)))
 })
 
 //API2 POST
@@ -47,7 +58,7 @@ app.post('/players/', async (request, response) => {
   VALUES
   ("${playerName}", ${jerseyNumber}, "${role}")`
   const postQueryrun = await dbObj.run(postQueryValue)
-  response.send('player info send successfully')
+  response.send('Player Added to Team')
 })
 
 //API3
@@ -55,9 +66,8 @@ app.post('/players/', async (request, response) => {
 app.get('/players/:playerId/', async (request, response) => {
   const {playerId} = request.params
   const getPlayerbyIdquery = `SELECT * FROM cricket_team WHERE player_id = ${playerId}`
-  console.log(playerId)
   const selectedValue = await dbObj.all(getPlayerbyIdquery)
-  response.send(selectedValue)
+  response.send(convertDbObject(selectedValue[0]))
 })
 
 //API4
