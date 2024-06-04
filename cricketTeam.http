@@ -1,0 +1,26 @@
+POST https://venkatadeepakzabmsnjscpxtwms.drops.nxtwave.tech/players/
+Content-type: application/json
+
+{
+  "playerName": "Vishal",
+  "jerseyNumber": 17,
+  "role": "Bowler"
+}
+###
+
+GET https://venkatadeepakzabmsnjscpxtwms.drops.nxtwave.tech/players/1
+
+###
+
+PUT https://venkatadeepakzabmsnjscpxtwms.drops.nxtwave.tech/players/1
+Content-type: application/json
+
+{
+  "playerName": "Maneesh",
+  "jerseyNumber": 54,
+  "role": "All-rounder"
+}
+
+###
+
+DELETE https://venkatadeepakzabmsnjscpxtwms.drops.nxtwave.tech/players/14/
